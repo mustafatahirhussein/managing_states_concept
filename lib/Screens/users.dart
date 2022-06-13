@@ -11,7 +11,7 @@ class Users extends StatefulWidget {
   State<Users> createState() => _UsersState();
 }
 
-class _UsersState extends State<Users> {
+class _UsersState extends State<Users> with AutomaticKeepAliveClientMixin {
   List<UsersModel>? userModel;
 
   fetchUsers() async {
@@ -19,8 +19,8 @@ class _UsersState extends State<Users> {
       var response = await http.get(Uri.parse("https://jsonplaceholder.typicode.com/users"));
 
       if (response.statusCode == 200) {
-        List<UsersModel> model = usersModelFromJson(jsonEncode(response.body));
-        userModel = model;
+        List<UsersModel> model = usersModelFromJson(response.body);
+       userModel = model;
 
         return userModel;
       } else {
@@ -41,7 +41,9 @@ class _UsersState extends State<Users> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    super.build(context);
+
+    return userModel == null ? const Center(child: CircularProgressIndicator()) : ListView.builder(
       shrinkWrap: true,
       itemCount: userModel!.length,
       itemBuilder: (context, index) {
@@ -56,4 +58,7 @@ class _UsersState extends State<Users> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

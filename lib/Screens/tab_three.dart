@@ -7,9 +7,11 @@ class TabThree extends StatefulWidget {
   State<TabThree> createState() => _TabThreeState();
 }
 
-class _TabThreeState extends State<TabThree> {
+class _TabThreeState extends State<TabThree> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return ListView.builder(
       shrinkWrap: true,
       itemCount: 22,
@@ -23,4 +25,8 @@ class _TabThreeState extends State<TabThree> {
       },
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

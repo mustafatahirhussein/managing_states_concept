@@ -58,6 +58,7 @@ class _MainOneState extends State<MainOne> {
         onTap: (v) {
           setState(() {
             index = v;
+            pageController!.jumpToPage(index!);
           });
         },
       ),
